@@ -2,7 +2,8 @@ import './App.css';
 import React, {useCallback, useEffect, useState} from "react";
 import {useTelegram} from "./hooks/useTelegram";
 import selectorData from "./selectorData";
-import {CloseButton, NativeSelect, Select, Textarea, TextInput} from "@mantine/core";
+import {CloseButton, Flex, NativeSelect, Select, Textarea, TextInput, UnstyledButton} from "@mantine/core";
+import classes from './App.css'
 
 
 const buf2hex = (buffer) => {
@@ -50,7 +51,7 @@ function App() {
   const [regionValue, setRegionValue] = useState('');
   const [commentValue, setCommentValue] = useState('');
 
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState('https://');
   const [isValidUrl, setIsValidUrl] = useState(true);
 
   const onSendData = useCallback(() => {
@@ -153,11 +154,13 @@ function App() {
               invalid={!isValidUrl}
               error={isValidUrl ? null : 'Введите корректную ссылку'}
               required
+              autocorrect="off"
+              autocapitalize="none"
               rightSection={
                 <CloseButton
                     aria-label="Clear input"
                     onClick={() => {
-                      setUrl('')
+                      setUrl('https://')
                       setIsValidUrl(true)
                     }}
                     style={{ display: url ? undefined : 'none' }}
