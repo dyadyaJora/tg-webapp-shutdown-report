@@ -138,7 +138,7 @@ function App() {
       <div className="App">
         <form style={{ padding: '20px' }}>
           <NativeSelect
-              size={"xl"}
+              size={"lg"}
               label="Интернет-провайдер"
               data={PROVIDERS}
               value={providerValue}
@@ -147,7 +147,7 @@ function App() {
               required
           />
           <Select
-              size={"xl"}
+              size={"lg"}
               label="Регион"
               data={REGIONS}
               value={regionValue}
@@ -159,7 +159,7 @@ function App() {
           />
           <TextInput
               className={"url"}
-              size={"xl"}
+              size={"lg"}
               label="Вставьте ссылку на недоступный ресурс"
               placeholder="Например, https://example.com"
               value={url}
@@ -182,14 +182,14 @@ function App() {
           />
 
           <NativeSelect
-              size={"xl"}
+              size={"lg"}
               label="Работает ли сервис с VPN?"
               data={VPN_USE_CASES}
               value={isVpnUsed}
               onChange={(event) => setVpnUsed(event.currentTarget.value)}
           />
           <NativeSelect
-              size={"xl"}
+              size={"lg"}
               label="VPN-провайдер"
               data={VPN_PROVIDERS}
               value={vpnProvider}
@@ -197,7 +197,7 @@ function App() {
               placeholder="Выберите ваш VPN-провайдер"
           />
           <NativeSelect
-              size={"xl"}
+              size={"lg"}
               label="VPN-протокол"
               data={VPN_PROTOCOLS}
               value={vpnProtocol}
@@ -210,7 +210,7 @@ function App() {
           {/*      direction="row"*/}
           {/*      wrap="wrap">{serviceItems}</Flex>*/}
           <Textarea
-              size={"xl"}
+              size={"lg"}
               label={`Комментарий (${commentValue.length}/140)`}
               placeholder="Если вы хотите описать проблему подробнее, то можете оставить тут комментарий"
               value={commentValue}
@@ -242,7 +242,7 @@ function ImageCheckbox({ checked, defaultChecked, onChange, title, description, 
   return (
       <UnstyledButton
           {...others}
-          size={"xl"}
+          size={"lg"}
           onClick={() => handleChange(!value)}
           data-checked={value || undefined}
           className={`${classes.buttonwrapper} ${className}`}
@@ -258,7 +258,7 @@ function ImageCheckbox({ checked, defaultChecked, onChange, title, description, 
             checked={value}
             onChange={() => {}}
             tabIndex={-1}
-            size={"xl"}
+            size={"lg"}
             styles={{ input: { cursor: 'pointer' } }}
         />
       </UnstyledButton>
