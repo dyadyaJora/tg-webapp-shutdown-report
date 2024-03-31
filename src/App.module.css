@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*.button {*/
+/*  padding: 10px 15px;*/
+/*  border-radius: 20px;*/
+/*  background: var(--tg-theme-button-color);*/
+/*  color: var(--tg-theme-button-text-color);*/
+/*  border: none;*/
+/*  outline: none;*/
+/*  cursor: pointer;*/
+/*}*/
+
+.buttonwrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  transition:
+          background-color 150ms ease,
+          border-color 150ms ease;
+  border-radius: var(--mantine-radius-sm);
+  padding: var(--mantine-spacing-sm);
+  border: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-8));
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
+
+  &[data-checked] {
+     border-color: var(--mantine-color-blue-filled);
+     background-color: var(--mantine-color-blue-light);
+   }
+}
+
+.checkboxbody {
+    flex: 1;
+    margin-left: var(--mantine-spacing-md);
+}

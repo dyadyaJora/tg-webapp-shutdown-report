@@ -1,9 +1,21 @@
-import './App.css';
+import './App.module.css';
 import React, {useCallback, useEffect, useState} from "react";
 import {useTelegram} from "./hooks/useTelegram";
 import selectorData from "./selectorData";
-import {CloseButton, Flex, NativeSelect, Select, Textarea, TextInput, UnstyledButton} from "@mantine/core";
-import classes from './App.css'
+import {
+  Checkbox,
+  CloseButton,
+  Flex,
+  Image,
+  NativeSelect,
+  Select, SimpleGrid,
+  Text,
+  Textarea,
+  TextInput,
+  UnstyledButton
+} from "@mantine/core";
+import classes from './App.module.css'
+import {useUncontrolled} from "@mantine/hooks";
 
 
 const buf2hex = (buffer) => {
@@ -47,15 +59,21 @@ function App() {
 
   const PROVIDERS = selectorData.providers.map(p => p.name)
   const REGIONS = selectorData.regions.map(p => p.name)
+  const VPN_USE_CASES = selectorData.vpn_use_cases.map(p => p.name)
+  const VPN_PROVIDERS = selectorData.vpn_providers.map(p => p.name)
+  const VPN_PROTOCOLS = selectorData.vpn_protocols.map(p => p.name)
   const [providerValue, setProviderValue] = useState('');
   const [regionValue, setRegionValue] = useState('');
+  const [vpnProvider, setVpnProvider] = useState('');
+  const [vpnProtocol, setVpnProtocol] = useState('');
+  const [isVpnUsed, setVpnUsed] = useState('');
   const [commentValue, setCommentValue] = useState('');
 
   const [url, setUrl] = useState('https://');
   const [isValidUrl, setIsValidUrl] = useState(true);
 
   const onSendData = useCallback(() => {
-    if (!url) {
+    if (!url || url === 'https://') {
       alert("Пожалуйста заполните url");
       return
     }
@@ -67,7 +85,10 @@ function App() {
       providerValue,
       regionValue,
       url,
-      commentValue
+      commentValue,
+      isVpnUsed,
+      vpnProvider,
+      vpnProtocol
     }
     tg.sendData(JSON.stringify(data));
   }, [
@@ -96,16 +117,6 @@ function App() {
     }
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    // Do something with form data
-    console.log({
-      providerValue,
-      regionValue,
-      commentValue
-    });
-  };
-
   const handleUrlChange = (event) => {
     const inputValue = event.target.value;
     setUrl(inputValue);
@@ -120,6 +131,8 @@ function App() {
       return false;
     }
   };
+
+  const serviceItems = servicesData.map((item) => <ImageCheckbox {...item} key={item.title} />);
 
   return (
       <div className="App">
@@ -154,8 +167,8 @@ function App() {
               invalid={!isValidUrl}
               error={isValidUrl ? null : 'Введите корректную ссылку'}
               required
-              autocorrect="off"
-              autocapitalize="none"
+              autoCorrect="off"
+              autoCapitalize="none"
               rightSection={
                 <CloseButton
                     aria-label="Clear input"
@@ -167,6 +180,35 @@ function App() {
                 />
               }
           />
+
+          <NativeSelect
+              size={"xl"}
+              label="Работает ли сервис с VPN?"
+              data={VPN_USE_CASES}
+              value={isVpnUsed}
+              onChange={(event) => setVpnUsed(event.currentTarget.value)}
+          />
+          <NativeSelect
+              size={"xl"}
+              label="VPN-провайдер"
+              data={VPN_PROVIDERS}
+              value={vpnProvider}
+              onChange={(event) => setVpnProvider(event.currentTarget.value)}
+              placeholder="Выберите ваш VPN-провайдер"
+          />
+          <NativeSelect
+              size={"xl"}
+              label="VPN-протокол"
+              data={VPN_PROTOCOLS}
+              value={vpnProtocol}
+              onChange={(event) => setVpnProtocol(event.currentTarget.value)}
+              placeholder="Выберите ваш VPN-протокол"
+          />
+          {/*<Flex gap="md"*/}
+          {/*      justify="flex-start"*/}
+          {/*      align="flex-start"*/}
+          {/*      direction="row"*/}
+          {/*      wrap="wrap">{serviceItems}</Flex>*/}
           <Textarea
               size={"xl"}
               label={`Комментарий (${commentValue.length}/140)`}
@@ -177,6 +219,49 @@ function App() {
           />
         </form>
       </div>
+  );
+}
+
+const servicesData = [
+  { title: "Мобильный интернет", key: "internet" },
+  { title: "Сервисы Google", key: "google" },
+  { title: "Youtube", key: "youtube" }
+]
+
+
+function ImageCheckbox({ checked, defaultChecked, onChange, title, description, className, image, ...others }) {
+  const [value, handleChange] = useUncontrolled({
+    value: checked,
+    defaultValue: defaultChecked,
+    finalValue: false,
+    onChange,
+  });
+
+  console.log(classes, "=======");
+
+  return (
+      <UnstyledButton
+          {...others}
+          size={"xl"}
+          onClick={() => handleChange(!value)}
+          data-checked={value || undefined}
+          className={`${classes.buttonwrapper} ${className}`}
+      >
+
+        <div className={classes.checkboxbody}>
+          <Text fontWeight={500} size={"xl"} lineHeight={1}>
+            {title}
+          </Text>
+        </div>
+
+        <Checkbox
+            checked={value}
+            onChange={() => {}}
+            tabIndex={-1}
+            size={"xl"}
+            styles={{ input: { cursor: 'pointer' } }}
+        />
+      </UnstyledButton>
   );
 }
 

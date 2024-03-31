@@ -9,6 +9,24 @@ module.exports = {
     { "name": "Мегафон" },
     { "name": "Билайн" }
   ],
+  "vpn_use_cases": [
+    { "name": "Не использую VPN" },
+    { "name": "Да" },
+    { "name": "Нет" }
+  ],
+  "vpn_providers": [
+    { "name": "Неизвестно" },
+    { "name": "vpn 1" },
+    { "name": "vpn 2" },
+    { "name": "vpn 3" }
+  ],
+  "vpn_protocols": [
+    { "name": "Неизвестно" },
+    { "name": "OpenVPN" },
+    { "name": "Wireguard" },
+    { "name": "Shadowsocks" },
+    { "name": "Cloak" }
+  ],
   "regions": [
     {"name": "Другой"},
     {"name": "город Москва"},
